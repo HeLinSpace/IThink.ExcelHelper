@@ -1,0 +1,636 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>H.Npoi.ExcelHelper</name>
+    </assembly>
+    <members>
+        <member name="T:H.Npoi.ExcelHelper.ColumnPropertyAttribute">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:H.Npoi.ExcelHelper.ColumnPropertyAttribute.#ctor(System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="colIndex">列序号</param>
+        </member>
+        <member name="P:H.Npoi.ExcelHelper.ColumnPropertyAttribute.ColIndex">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:H.Npoi.ExcelHelper.ExcelImport">
+            <summary>
+            Excel Helper for NPOI.
+            </summary>
+        </member>
+        <member name="M:H.Npoi.ExcelHelper.ExcelImport.#ctor(Microsoft.AspNetCore.Http.IFormFile)">
+            <summary>
+            open workbook by request
+            </summary>
+            <param name="file">request formfile</param>
+            <returns></returns>
+        </member>
+        <member name="M:H.Npoi.ExcelHelper.ExcelImport.#ctor(System.IO.Stream,System.Boolean)">
+            <summary>
+            open workbook by stream
+            </summary>
+            <param name="stream"></param>
+            <param name="isXlsx"></param>
+            <returns></returns>
+        </member>
+        <member name="M:H.Npoi.ExcelHelper.ExcelImport.Import``1(System.Int32,System.Int32,System.Int32,System.Func{System.Collections.Generic.List{``0},H.Npoi.ExcelHelper.ImportSheetInfo,System.Object})">
+            <summary>
+            执行导入
+            </summary>
+            <typeparam name="T">接收数据的模型，需从Excel中获取的属性必须标记<see cref="T:H.Npoi.ExcelHelper.ColumnPropertyAttribute"/></typeparam>
+            <param name="sheetNo">the index of sheet</param>
+            <param name="startIndex">数据行</param>
+            <param name="errorIndex">错误列（最后一列数据+1）</param>
+            <param name="business">执行业务处理（执行于获取所有数据以后）</param>
+            <returns></returns>
+        </member>
+        <member name="M:H.Npoi.ExcelHelper.ExcelImport.Import``1(System.String,System.Int32,System.Int32,System.Func{System.Collections.Generic.List{``0},H.Npoi.ExcelHelper.ImportSheetInfo,System.Object})">
+            <summary>
+            执行导入
+            </summary>
+            <typeparam name="T">接收数据的模型，需从Excel中获取的属性必须标记<see cref="T:H.Npoi.ExcelHelper.ColumnPropertyAttribute"/></typeparam>
+            <param name="sheetNo">the index of sheet</param>
+            <param name="startIndex">数据行</param>
+            <param name="errorIndex">错误列（最后一列数据+1）</param>
+            <param name="business">执行业务处理（执行于获取所有数据以后）</param>
+            <returns></returns>
+        </member>
+        <member name="M:H.Npoi.ExcelHelper.ExcelImport.Import``1(NPOI.SS.UserModel.ISheet,System.Int32,System.Int32,System.Func{System.Collections.Generic.List{``0},H.Npoi.ExcelHelper.ImportSheetInfo,System.Object})">
+            <summary>
+            执行导入
+            </summary>
+            <typeparam name="T">接收数据的模型，需从Excel中获取的属性必须标记<see cref="T:H.Npoi.ExcelHelper.ColumnPropertyAttribute"/></typeparam>
+            <param name="sheetNo">the index of sheet</param>
+            <param name="startIndex">数据行</param>
+            <param name="errorIndex">错误列（最后一列数据+1）</param>
+            <param name="business">执行业务处理（执行于获取所有数据以后）</param>
+            <returns></returns>
+        </member>
+        <member name="M:H.Npoi.ExcelHelper.ExcelImport.Import``1(System.Int32,System.Int32,System.Int32,System.Action{``0,H.Npoi.ExcelHelper.ImportSheetInfo},System.Func{System.Collections.Generic.List{``0},H.Npoi.ExcelHelper.ImportSheetInfo,System.Object})">
+            <summary>
+            执行导入
+            </summary>
+            <typeparam name="T">接收数据的模型，需从Excel中获取的属性必须标记<see cref="T:H.Npoi.ExcelHelper.ColumnPropertyAttribute"/></typeparam>
+            <param name="sheetNo"></param>
+            <param name="startIndex">数据行</param>
+            <param name="errorIndex">错误列（最后一列数据+1）</param>
+            <param name="rowFunc">行数据获取后执行，常用于数据检查</param>
+            <param name="business">执行业务处理（执行于获取所有数据以后）</param>
+            <returns></returns>
+        </member>
+        <member name="M:H.Npoi.ExcelHelper.ExcelImport.Import``1(System.String,System.Int32,System.Int32,System.Action{``0,H.Npoi.ExcelHelper.ImportSheetInfo},System.Func{System.Collections.Generic.List{``0},H.Npoi.ExcelHelper.ImportSheetInfo,System.Object})">
+            <summary>
+            执行导入
+            </summary>
+            <typeparam name="T">接收数据的模型，需从Excel中获取的属性必须标记<see cref="T:H.Npoi.ExcelHelper.ColumnPropertyAttribute"/></typeparam>
+            <param name="sheetNo"></param>
+            <param name="startIndex">数据行</param>
+            <param name="errorIndex">错误列（最后一列数据+1）</param>
+            <param name="rowFunc">行数据获取后执行，常用于数据检查</param>
+            <param name="business">执行业务处理（执行于获取所有数据以后）</param>
+            <returns></returns>
+        </member>
+        <member name="M:H.Npoi.ExcelHelper.ExcelImport.Import``1(NPOI.SS.UserModel.ISheet,System.Int32,System.Int32,System.Action{``0,H.Npoi.ExcelHelper.ImportSheetInfo},System.Func{System.Collections.Generic.List{``0},H.Npoi.ExcelHelper.ImportSheetInfo,System.Object})">
+            <summary>
+            执行导入
+            </summary>
+            <typeparam name="T">接收数据的模型，需从Excel中获取的属性必须标记<see cref="T:H.Npoi.ExcelHelper.ColumnPropertyAttribute"/></typeparam>
+            <param name="sheetNo"></param>
+            <param name="startIndex">数据行</param>
+            <param name="errorIndex">错误列（最后一列数据+1）</param>
+            <param name="rowFunc">行数据获取后执行，常用于数据检查</param>
+            <param name="business">执行业务处理（执行于获取所有数据以后）</param>
+            <returns></returns>
+        </member>
+        <member name="M:H.Npoi.ExcelHelper.ExcelImport.Import``1(System.Int32,System.Int32,System.Int32,System.Action{``0,H.Npoi.ExcelHelper.ImportSheetInfo},System.Func{System.Collections.Generic.List{``0},H.Npoi.ExcelHelper.ImportSheetInfo,System.Object},System.Object)">
+            <summary>
+            执行导入
+            </summary>
+            <typeparam name="T">接收数据的模型，需从Excel中获取的属性必须标记<see cref="T:H.Npoi.ExcelHelper.ColumnPropertyAttribute"/></typeparam>
+            <param name="sheetNo">the index of sheet</param>
+            <param name="startIndex">数据行</param>
+            <param name="errorIndex">错误列（最后一列数据+1）</param>
+            <param name="rowFunc">行数据获取后执行，常用于数据检查</param>
+            <param name="business">执行业务处理（执行于获取所有数据以后）</param>
+            <param name="extraParam">提供给 rowFunc or business 的额外参数</param>
+            <returns></returns>
+        </member>
+        <member name="M:H.Npoi.ExcelHelper.ExcelImport.Import``1(System.String,System.Int32,System.Int32,System.Action{``0,H.Npoi.ExcelHelper.ImportSheetInfo},System.Func{System.Collections.Generic.List{``0},H.Npoi.ExcelHelper.ImportSheetInfo,System.Object},System.Object)">
+            <summary>
+            执行导入
+            </summary>
+            <typeparam name="T">接收数据的模型，需从Excel中获取的属性必须标记<see cref="T:H.Npoi.ExcelHelper.ColumnPropertyAttribute"/></typeparam>
+            <param name="sheetNo">the index of sheet</param>
+            <param name="startIndex">数据行</param>
+            <param name="errorIndex">错误列（最后一列数据+1）</param>
+            <param name="rowFunc">行数据获取后执行，常用于数据检查</param>
+            <param name="business">执行业务处理（执行于获取所有数据以后）</param>
+            <param name="extraParam">提供给 rowFunc or business 的额外参数</param>
+            <returns></returns>
+        </member>
+        <member name="M:H.Npoi.ExcelHelper.ExcelImport.Import``1(NPOI.SS.UserModel.ISheet,System.Int32,System.Int32,System.Action{``0,H.Npoi.ExcelHelper.ImportSheetInfo},System.Func{System.Collections.Generic.List{``0},H.Npoi.ExcelHelper.ImportSheetInfo,System.Object},System.Object)">
+            <summary>
+            执行导入
+            </summary>
+            <typeparam name="T">接收数据的模型，需从Excel中获取的属性必须标记<see cref="T:H.Npoi.ExcelHelper.ColumnPropertyAttribute"/></typeparam>
+            <param name="sheetNo">the index of sheet</param>
+            <param name="startIndex">数据行</param>
+            <param name="errorIndex">错误列（最后一列数据+1）</param>
+            <param name="rowFunc">行数据获取后执行，常用于数据检查</param>
+            <param name="business">执行业务处理（执行于获取所有数据以后）</param>
+            <param name="extraParam">提供给 rowFunc or business 的额外参数</param>
+            <returns></returns>
+        </member>
+        <member name="T:H.Npoi.ExcelHelper.ImportDataExtension">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:H.Npoi.ExcelHelper.ImportDataModel.Row">
+            <summary> 
+            行数据
+            </summary>
+        </member>
+        <member name="P:H.Npoi.ExcelHelper.ImportColumnModel.ColIndex">
+            <summary> 
+            列号
+            </summary>
+        </member>
+        <member name="P:H.Npoi.ExcelHelper.ImportColumnModel.Value">
+            <summary> 
+            单元格值
+            </summary>
+        </member>
+        <member name="T:H.Npoi.ExcelHelper.ImportSheetInfo">
+            <summary>
+            Excel Helper for NPOI.
+            </summary>
+        </member>
+        <member name="P:H.Npoi.ExcelHelper.ImportSheetInfo.Workbook">
+            <summary>
+            current workbook
+            </summary>
+        </member>
+        <member name="P:H.Npoi.ExcelHelper.ImportSheetInfo.CurrentSheet">
+            <summary>
+            current worksheet
+            </summary>
+        </member>
+        <member name="P:H.Npoi.ExcelHelper.ImportSheetInfo.DataStartIndex">
+            <summary>
+            the data row start number
+            </summary>
+        </member>
+        <member name="P:H.Npoi.ExcelHelper.ImportSheetInfo.ErrorColIndex">
+            <summary>
+            error message col
+            </summary>
+        </member>
+        <member name="P:H.Npoi.ExcelHelper.ImportSheetInfo.LastRowNum">
+            <summary>
+            last row contained n this sheet (0-based)
+            </summary>
+        </member>
+        <member name="P:H.Npoi.ExcelHelper.ImportSheetInfo.ExtraParam">
+            <summary>
+            params for row func or business func
+            </summary>
+        </member>
+        <member name="M:H.Npoi.ExcelHelper.ImportSheetInfo.GetSheetAt(System.Int32)">
+            <summary>
+            current worksheet
+            </summary>
+        </member>
+        <member name="M:H.Npoi.ExcelHelper.ImportSheetInfo.GetSheet(System.String)">
+            <summary>
+            current worksheet
+            </summary>
+        </member>
+        <member name="P:H.Npoi.ExcelHelper.ImportSheetInfo.DefaultCellStyle">
+            <summary>
+            get or set default cellStyle for current workbook before your own operate.
+            </summary>
+        </member>
+        <member name="M:H.Npoi.ExcelHelper.ImportSheetInfo.GetSheetData``1(System.Int32,System.Int32,System.Int32,System.Action{``0,H.Npoi.ExcelHelper.ImportSheetInfo})">
+            <summary>
+            获取工作表数据
+            </summary>
+            <typeparam name="T">接收数据的模型，需从Excel中获取的属性必须标记<see cref="T:H.Npoi.ExcelHelper.ColumnPropertyAttribute"/></typeparam>
+            <param name="sheetNo">the index of sheet</param>
+            <param name="startIndex">数据行</param>
+            <param name="errorIndex">错误列（最后一列数据+1）</param>
+            <param name="rowFunc">行数据获取后执行，常用于数据检查</param>
+            <returns></returns>
+        </member>
+        <member name="M:H.Npoi.ExcelHelper.ImportSheetInfo.GetSheetData``1(System.String,System.Int32,System.Int32,System.Action{``0,H.Npoi.ExcelHelper.ImportSheetInfo})">
+            <summary>
+            获取工作表数据
+            </summary>
+            <typeparam name="T">接收数据的模型，需从Excel中获取的属性必须标记<see cref="T:H.Npoi.ExcelHelper.ColumnPropertyAttribute"/></typeparam>
+            <param name="worksheet">工作表</param>
+            <param name="sheetName">the name of sheet</param>
+            <param name="startIndex">数据行</param>
+            <param name="errorIndex">错误列（最后一列数据+1）</param>
+            <param name="rowFunc">行数据获取后执行，常用于数据检查</param>
+            <returns></returns>
+        </member>
+        <member name="M:H.Npoi.ExcelHelper.ImportSheetInfo.GetSheetData``1(NPOI.SS.UserModel.ISheet,System.Int32,System.Int32,System.Action{``0,H.Npoi.ExcelHelper.ImportSheetInfo})">
+            <summary>
+            获取工作表数据
+            </summary>
+            <typeparam name="T">接收数据的模型，需从Excel中获取的属性必须标记<see cref="T:H.Npoi.ExcelHelper.ColumnPropertyAttribute"/></typeparam>
+            <param name="worksheet">current sheet</param>
+            <param name="startIndex">数据行</param>
+            <param name="errorIndex">错误列（最后一列+1）</param>
+            <param name="rowFunc">行数据获取后执行，常用于数据检查</param>
+            <returns></returns>
+        </member>
+        <member name="M:H.Npoi.ExcelHelper.ImportSheetInfo.GetSheetData``1(System.Int32,System.Int32,System.Int32,System.Action{``0,H.Npoi.ExcelHelper.ImportSheetInfo},System.Object)">
+            <summary>
+            获取工作表数据
+            </summary>
+            <typeparam name="T">接收数据的模型，需从Excel中获取的属性必须标记<see cref="T:H.Npoi.ExcelHelper.ColumnPropertyAttribute"/></typeparam>
+            <param name="sheetNo">the index of sheet</param>
+            <param name="startIndex">数据行</param>
+            <param name="errorIndex">错误列（最后一列数据+1）</param>
+            <param name="rowFunc">行数据获取后执行，常用于数据检查</param>
+            <returns></returns>
+        </member>
+        <member name="M:H.Npoi.ExcelHelper.ImportSheetInfo.GetSheetData``1(System.String,System.Int32,System.Int32,System.Action{``0,H.Npoi.ExcelHelper.ImportSheetInfo},System.Object)">
+            <summary>
+            获取工作表数据
+            </summary>
+            <typeparam name="T">接收数据的模型，需从Excel中获取的属性必须标记<see cref="T:H.Npoi.ExcelHelper.ColumnPropertyAttribute"/></typeparam>
+            <param name="sheetName">the name of sheet</param>
+            <param name="startIndex">数据行</param>
+            <param name="errorIndex">错误列（最后一列数据+1）</param>
+            <param name="rowFunc">行数据获取后执行，常用于数据检查</param>
+            <returns></returns>
+        </member>
+        <member name="M:H.Npoi.ExcelHelper.ImportSheetInfo.GetSheetData``1(NPOI.SS.UserModel.ISheet,System.Int32,System.Int32,System.Action{``0,H.Npoi.ExcelHelper.ImportSheetInfo},System.Object)">
+            <summary>
+            获取工作表数据
+            </summary>
+            <typeparam name="T">接收数据的模型，需从Excel中获取的属性必须标记<see cref="T:H.Npoi.ExcelHelper.ColumnPropertyAttribute"/></typeparam>
+            <param name="worksheet">current sheet</param>
+            <param name="startIndex">数据行</param>
+            <param name="errorIndex">错误列（最后一列+1）</param>
+            <param name="rowFunc">行数据获取后执行，常用于数据检查</param>
+            <param name="extraParam">提供给 rowFunc 的额外参数</param>
+            <returns></returns>
+        </member>
+        <member name="M:H.Npoi.ExcelHelper.ImportSheetInfo.WriteError``1(System.Collections.Generic.List{``0},System.String,NPOI.SS.UserModel.ICellStyle)">
+            <summary>
+            写入错误文件
+            </summary>
+            <typeparam name="T">接收数据的模型，需从Excel中获取的属性必须标记<see cref="T:H.Npoi.ExcelHelper.ColumnPropertyAttribute"/></typeparam>
+            <param name="errRowList">写入数据源</param>
+            <param name="filePath">保存文件名</param>
+            <param name="cellStyle">错误列格式</param>
+            <returns></returns>
+        </member>
+        <member name="M:H.Npoi.ExcelHelper.ImportSheetInfo.WriteErrorFile``1(System.Collections.Generic.List{``0},System.String,System.String,NPOI.SS.UserModel.ICellStyle)">
+            <summary>
+            写入错误文件
+            </summary>
+            <typeparam name="T">接收数据的模型，需从Excel中获取的属性必须标记<see cref="T:H.Npoi.ExcelHelper.ColumnPropertyAttribute"/></typeparam>
+            <param name="errRowList">写入数据源</param>
+            <param name="filePath">保存文件名</param>
+            <param name="cellStyle">错误列格式</param>
+            <returns></returns>
+        </member>
+        <member name="M:H.Npoi.ExcelHelper.ImportSheetInfo.WriteError``1(NPOI.SS.UserModel.ISheet,System.Collections.Generic.List{``0},System.Int32,System.Int32,System.String,NPOI.SS.UserModel.ICellStyle)">
+            <summary>
+            写入错误文件
+            </summary>
+            <typeparam name="T">接收数据的模型，需从Excel中获取的属性必须标记<see cref="T:H.Npoi.ExcelHelper.ColumnPropertyAttribute"/></typeparam>
+            <param name="worksheet">工作表</param>
+            <param name="errRowList">写入数据源</param>
+            <param name="startIndex">数据行</param>
+            <param name="errorIndex">错误列</param>
+            <param name="filePath">保存文件名</param>
+            <param name="cellStyle">错误列格式</param>
+            <returns></returns>
+        </member>
+        <member name="M:H.Npoi.ExcelHelper.ImportSheetInfo.WriteErrorFile``1(NPOI.SS.UserModel.ISheet,System.Collections.Generic.List{``0},System.Int32,System.Int32,System.String,System.String,NPOI.SS.UserModel.ICellStyle)">
+            <summary>
+            写入错误文件
+            </summary>
+            <typeparam name="T">接收数据的模型，需从Excel中获取的属性必须标记<see cref="T:H.Npoi.ExcelHelper.ColumnPropertyAttribute"/></typeparam>
+            <param name="workbook">工作簿</param>
+            <param name="worksheet">工作表</param>
+            <param name="errRowList">写入数据源</param>
+            <param name="startIndex">数据行</param>
+            <param name="errorIndex">错误列</param>
+            <param name="filePath">保存文件名</param>
+            <param name="cellStyle">错误列格式</param>
+            <returns></returns>
+        </member>
+        <member name="M:H.Npoi.ExcelHelper.ImportSheetInfo.GetSheetData``1(System.Int32,System.Int32,System.Action{``0,H.Npoi.ExcelHelper.ImportSheetInfo})">
+            <summary>
+            获取工作表数据
+            </summary>
+            <typeparam name="T">接收数据的模型，需从Excel中获取的属性必须标记<see cref="T:H.Npoi.ExcelHelper.ColumnPropertyAttribute"/></typeparam>
+            <param name="worksheet">工作表</param>
+            <param name="sheetNo"></param>
+            <param name="startIndex">数据行</param>
+            <param name="errorIndex">错误列（最后一列+1）</param>
+            <param name="rowFunc">行数据获取后执行，常用于数据检查</param>
+            <returns></returns>
+        </member>
+        <member name="M:H.Npoi.ExcelHelper.ImportSheetInfo.GetSheetData``1(System.Int32,System.Int32,System.Action{``0,H.Npoi.ExcelHelper.ImportSheetInfo},System.Object)">
+            <summary>
+            获取工作表数据
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="worksheet">工作表</param>
+            <param name="sheetNo"></param>
+            <param name="startIndex">数据行</param>
+            <param name="errorIndex">错误列（最后一列数据+1）</param>
+            <param name="rowFunc">行数据获取后执行，常用于数据检查</param>
+            <returns></returns>
+        </member>
+        <member name="P:H.Npoi.ExcelHelper.ExportColItem.ColNo">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:H.Npoi.ExcelHelper.ExportColItem.Value">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:H.Npoi.ExcelHelper.ExportRowItem.RowNo">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:H.Npoi.ExcelHelper.ExportRowItem.Cols">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:H.Npoi.ExcelHelper.ImportBaseModel.RowNo">
+            <summary>
+            行号
+            </summary>
+        </member>
+        <member name="P:H.Npoi.ExcelHelper.ImportBaseModel.ErrorMsg">
+            <summary>
+            错误消息
+            </summary>
+        </member>
+        <member name="T:H.Npoi.ExcelHelper.NExcelHelper">
+            <summary>
+            Excel Helper for NPOI.
+            </summary>
+        </member>
+        <member name="M:H.Npoi.ExcelHelper.NExcelHelper.Open(System.String)">
+            <summary>
+            open workbook by full path
+            </summary>
+            <param name="path"></param>
+            <returns></returns>
+        </member>
+        <member name="M:H.Npoi.ExcelHelper.NExcelHelper.Open(Microsoft.AspNetCore.Http.IFormFile)">
+            <summary>
+            open workbook by request
+            </summary>
+            <param name="file">request formfile</param>
+            <returns></returns>
+        </member>
+        <member name="M:H.Npoi.ExcelHelper.NExcelHelper.Open(System.IO.Stream,System.Boolean)">
+            <summary>
+            open workbook by stream
+            </summary>
+            <param name="stream"></param>
+            <param name="isXlsx"></param>
+            <returns></returns>
+        </member>
+        <member name="M:H.Npoi.ExcelHelper.NExcelHelper.Save(NPOI.SS.UserModel.IWorkbook,System.String)">
+            <summary>
+            保存
+            </summary>
+            <param name="workbook"></param>
+            <param name="filePath"></param>
+        </member>
+        <member name="M:H.Npoi.ExcelHelper.NExcelHelper.Save(NPOI.SS.UserModel.IWorkbook)">
+            <summary>
+            保存
+            </summary>
+            <param name="workbook"></param>
+        </member>
+        <member name="M:H.Npoi.ExcelHelper.NExcelHelper.Export``1(System.Collections.Generic.List{``0},System.String,System.Int32,System.Func{NPOI.SS.UserModel.IWorkbook,System.Int32,NPOI.SS.UserModel.ICellStyle})">
+            <summary>
+            执行导出
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="dataList"></param>
+            <param name="dataRowIndex">数据行</param>
+            <param name="templateFullPath">模板全路径</param>
+            <param name="cellStyleFunc">T1:current workbook  T2:col index</param>
+            <returns></returns>
+        </member>
+        <member name="M:H.Npoi.ExcelHelper.NExcelHelper.ExportWorkbook``1(System.Collections.Generic.List{``0},System.String,System.Int32,System.Func{NPOI.SS.UserModel.IWorkbook,System.Int32,NPOI.SS.UserModel.ICellStyle})">
+            <summary>
+            
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="dataList"></param>
+            <param name="templateFullPath"></param>
+            <param name="dataRowIndex"></param>
+            <param name="cellStyleFunc">T1:current workbook T2:col index</param>
+            <returns></returns>
+        </member>
+        <member name="M:H.Npoi.ExcelHelper.NExcelHelper.ExportWorkbook``1(System.Collections.Generic.List{``0},System.String,System.Int32,System.Func{NPOI.SS.UserModel.IWorkbook,NPOI.SS.UserModel.ICellStyle})">
+            <summary>
+            执行导出
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="dataList"></param>
+            <param name="dataRowIndex">数据行</param>
+            <param name="templateFullPath">模板全路径</param>
+            <param name="cellStyleFunc">单元格格式</param>
+            <returns></returns>
+        </member>
+        <member name="M:H.Npoi.ExcelHelper.NExcelHelper.Export``1(System.Collections.Generic.List{``0},System.String,System.Int32,NPOI.SS.UserModel.ICellStyle,System.Int32)">
+            <summary>
+            执行导出
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="dataList"></param>
+            <param name="dataRowIndex">数据行</param>
+            <param name="templateFullPath">模板全路径</param>
+            <param name="cellStyle">单元格格式</param>
+            <param name="sheetNo">work sheet</param>
+            <returns></returns>
+        </member>
+        <member name="M:H.Npoi.ExcelHelper.NExcelHelper.ExportWorkbook``1(System.Collections.Generic.List{``0},System.String,System.Int32,NPOI.SS.UserModel.ICellStyle,System.Int32)">
+            <summary>
+            执行导出
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="dataList"></param>
+            <param name="dataRowIndex">数据行</param>
+            <param name="templateFullPath">模板全路径</param>
+            <param name="cellStyle">单元格格式</param>
+            <param name="sheetNo">work sheet</param>
+            <returns></returns>
+        </member>
+        <member name="M:H.Npoi.ExcelHelper.NExcelHelper.GetValue(NPOI.SS.UserModel.ICell)">
+            <summary>
+            获取NPOI的单元格的值
+            </summary>
+            <param name="cell"></param>
+            <returns></returns>
+        </member>
+        <member name="M:H.Npoi.ExcelHelper.NExcelHelper.SetValue(NPOI.SS.UserModel.ICell,System.Object)">
+            <summary>
+            set the cell value.auto match the value type.
+            </summary>
+            <param name="cell"></param>
+            <param name="value"></param> 
+        </member>
+        <member name="M:H.Npoi.ExcelHelper.NExcelHelper.CreateCellStyle(NPOI.SS.UserModel.IWorkbook,System.Int32,System.Boolean,System.Boolean,System.Boolean,NPOI.SS.UserModel.IColor,System.String,NPOI.SS.UserModel.VerticalAlignment,NPOI.SS.UserModel.HorizontalAlignment,System.String,NPOI.SS.UserModel.IColor)">
+            <summary>
+            create the CellStyle by Workbook
+            </summary>
+            <param name="workbook"></param>
+            <param name="size">default 10</param>
+            <param name="isBold"></param>
+            <param name="isBorder"></param>
+            <param name="isWrapText"></param>
+            <param name="backColor"></param>
+            <param name="cellFormat"></param>
+            <param name="verticalAlignment"></param>
+            <param name="horizontalAlignment"></param>
+            <param name="fontName"></param>
+            <param name="fontColor"></param>
+            <returns></returns>
+        </member>
+        <member name="M:H.Npoi.ExcelHelper.NExcelHelper.ToDecimal(System.Object)">
+            <summary>
+            
+            </summary>
+            <param name="v"></param>
+            <returns></returns>
+        </member>
+        <member name="T:H.Npoi.ExcelHelper.NExcelHelper.CellFormat">
+            <summary>
+            CellFormat
+            </summary>
+        </member>
+        <member name="F:H.Npoi.ExcelHelper.NExcelHelper.CellFormat.Num_Thou">
+            <summary>
+            1000 -> 1,000
+            </summary>
+        </member>
+        <member name="F:H.Npoi.ExcelHelper.NExcelHelper.CellFormat.Num_ThouDec">
+            <summary>
+            1000 -> 1,000.0
+            </summary>
+        </member>
+        <member name="F:H.Npoi.ExcelHelper.NExcelHelper.CellFormat.Num_ThouDec2">
+            <summary>
+            1000 -> 1,000.0.
+            </summary>
+        </member>
+        <member name="F:H.Npoi.ExcelHelper.NExcelHelper.CellFormat.Num_Dec">
+            <summary>
+            0->0.0
+            </summary>
+        </member>
+        <member name="F:H.Npoi.ExcelHelper.NExcelHelper.CellFormat.Num_Dec2">
+            <summary>
+            0->0.00
+            </summary>
+        </member>
+        <member name="F:H.Npoi.ExcelHelper.NExcelHelper.CellFormat.Num_Dec3">
+            <summary>
+            0->0.000
+            </summary>
+        </member>
+        <member name="F:H.Npoi.ExcelHelper.NExcelHelper.CellFormat.Num_Dec4">
+            <summary>
+            0->0.0000
+            </summary>
+        </member>
+        <member name="F:H.Npoi.ExcelHelper.NExcelHelper.CellFormat.Num_Normal">
+            <summary>
+            Num Normal
+            </summary>
+        </member>
+        <member name="F:H.Npoi.ExcelHelper.NExcelHelper.CellFormat.Percent_Dec2">
+            <summary>
+            Percent
+            </summary>
+        </member>
+        <member name="F:H.Npoi.ExcelHelper.NExcelHelper.CellFormat.Percent_Dec1">
+            <summary>
+            百分比(1位小数)
+            </summary>
+        </member>
+        <member name="F:H.Npoi.ExcelHelper.NExcelHelper.CellFormat.Percent_Dec0">
+            <summary>
+            百分比(0位小数)
+            </summary>
+        </member>
+        <member name="F:H.Npoi.ExcelHelper.NExcelHelper.CellFormat.CharString">
+            <summary>
+            字符串
+            </summary>
+        </member>
+        <member name="F:H.Npoi.ExcelHelper.NExcelHelper.CellFormat.Common">
+            <summary>
+            通用
+            </summary>
+        </member>
+        <member name="F:H.Npoi.ExcelHelper.NExcelHelper.CellFormat.ShortDateString">
+            <summary>
+            年月日期格式
+            </summary>
+        </member>
+        <member name="F:H.Npoi.ExcelHelper.NExcelHelper.CellFormat.DefaultShortDate">
+            <summary>
+            年月日日期格式
+            </summary>
+        </member>
+        <member name="F:H.Npoi.ExcelHelper.NExcelHelper.CellFormat.ShortDate">
+            <summary>
+            年月日日期格式
+            </summary>
+        </member>
+        <member name="F:H.Npoi.ExcelHelper.NExcelHelper.CellFormat.YearDateString">
+            <summary>
+            年度日期格式
+            </summary>
+        </member>
+        <member name="P:H.Npoi.ExcelHelper.NExcelHelper.ExportRowItem.RowNo">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:H.Npoi.ExcelHelper.NExcelHelper.ExportRowItem.Cols">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:H.Npoi.ExcelHelper.NExcelHelper.ExportColItem.ColNo">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:H.Npoi.ExcelHelper.NExcelHelper.ExportColItem.Value">
+            <summary>
+            
+            </summary>
+        </member>
+    </members>
+</doc>

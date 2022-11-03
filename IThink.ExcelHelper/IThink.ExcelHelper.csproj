@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <AssemblyName>H.Npoi.ExcelHelper</AssemblyName>
+    <RootNamespace>H.Npoi.ExcelHelper</RootNamespace>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DocumentationFile>D:\WorkSpace\.net\study\IThink.Nuget\IThink.ExcelHelper\IThink.ExcelHelper\H.Npoi.ExcelHelper.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Http.Features" Version="3.1.30" />
+    <PackageReference Include="NPOI" Version="2.5.6" />
+  </ItemGroup>
+
+</Project>
