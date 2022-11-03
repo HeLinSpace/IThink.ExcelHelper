@@ -17,7 +17,7 @@ namespace IThink.ExcelHelper.Test
             // test import
             using (var w = NExcelHelper.Open(template))
             {
-                var res = w.Import<TestImport>(0, 1, 4, RowCheck, ImportBussiness);
+                var res = w.Import<TestImport>(0, 1, 4, RowCheck, ImportBusiness);
             }
 
             // test export
@@ -56,8 +56,26 @@ namespace IThink.ExcelHelper.Test
              });
 
             workbook.Save("./AppData/TestExport.xlsx");
+
+
+            var bytes = list.Export(template, 1, (workbook, index) =>
+            {
+                var cellStyle = NExcelHelper.CreateCellStyle(workbook);
+                if (index == 3)
+                {
+                    var dataFormatCustom = (XSSFDataFormat)workbook.CreateDataFormat();
+                    cellStyle.DataFormat = dataFormatCustom.GetFormat(NExcelHelper.CellFormat.DefaultShortDate);
+                }
+
+                return cellStyle;
+            });
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="item">data item </param>
+        /// <param name="excelImport"></param>
         private static void RowCheck(TestImport item, ImportSheetInfo excelImport)
         {
             // do some  check like this 
@@ -67,7 +85,13 @@ namespace IThink.ExcelHelper.Test
             }
         }
 
-        private static dynamic ImportBussiness(List<TestImport> list, ImportSheetInfo excelImport)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="list">sheet datas</param>
+        /// <param name="excelImport"></param>
+        /// <returns></returns>
+        private static dynamic ImportBusiness(List<TestImport> list, ImportSheetInfo excelImport)
         {
             // has error
             if (list.Any(s => !string.IsNullOrEmpty(s.ErrorMsg)))
