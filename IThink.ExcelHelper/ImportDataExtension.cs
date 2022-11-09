@@ -42,12 +42,12 @@ namespace H.Npoi.ExcelHelper
         {
             var result = new T();
             Type type = result.GetType();
-            var members = type.GetProperties();
+            var members = result.GetType().GetProperties().Where(s => s.GetCustomAttribute(typeof(ColumnPropertyAttribute)) != null);
 
             foreach (var item in members)
             {
                 // 获取每个成员拥有的特性
-                var attribute = (ColumnPropertyAttribute)item.GetCustomAttributes().FirstOrDefault(s => s.GetType() == typeof(ColumnPropertyAttribute));
+                var attribute = (ColumnPropertyAttribute)item.GetCustomAttribute(typeof(ColumnPropertyAttribute));
                 if (attribute != null)
                 {
                     var value = rowData.FirstOrDefault(s => s.ColIndex == attribute.ColIndex).Value;

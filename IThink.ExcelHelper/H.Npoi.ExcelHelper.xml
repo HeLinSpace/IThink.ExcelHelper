@@ -173,6 +173,11 @@
             Excel Helper for NPOI.
             </summary>
         </member>
+        <member name="P:H.Npoi.ExcelHelper.ImportSheetInfo.SheetData">
+            <summary>
+            current sheet original data.
+            </summary>
+        </member>
         <member name="P:H.Npoi.ExcelHelper.ImportSheetInfo.Workbook">
             <summary>
             current workbook
@@ -234,7 +239,6 @@
             获取工作表数据
             </summary>
             <typeparam name="T">接收数据的模型，需从Excel中获取的属性必须标记<see cref="T:H.Npoi.ExcelHelper.ColumnPropertyAttribute"/></typeparam>
-            <param name="worksheet">工作表</param>
             <param name="sheetName">the name of sheet</param>
             <param name="startIndex">数据行</param>
             <param name="errorIndex">错误列（最后一列数据+1）</param>
@@ -350,11 +354,10 @@
             获取工作表数据
             </summary>
             <typeparam name="T"></typeparam>
-            <param name="worksheet">工作表</param>
-            <param name="sheetNo"></param>
             <param name="startIndex">数据行</param>
             <param name="errorIndex">错误列（最后一列数据+1）</param>
             <param name="rowFunc">行数据获取后执行，常用于数据检查</param>
+            <param name="extraParam">额外参数</param>
             <returns></returns>
         </member>
         <member name="P:H.Npoi.ExcelHelper.ExportColItem.ColNo">

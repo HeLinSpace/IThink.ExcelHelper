@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using NPOI.SS.UserModel;
 
 namespace H.Npoi.ExcelHelper
@@ -12,6 +13,9 @@ namespace H.Npoi.ExcelHelper
     {
         private ICellStyle _defaultCellStyle;
 
+        /// <summary>
+        /// current sheet original data.
+        /// </summary>
         public List<ImportDataModel> SheetData { get; private set; }
 
         /// <summary>
@@ -109,7 +113,6 @@ namespace H.Npoi.ExcelHelper
         /// 获取工作表数据
         /// </summary>
         /// <typeparam name="T">接收数据的模型，需从Excel中获取的属性必须标记<see cref="ColumnPropertyAttribute"/></typeparam>
-        /// <param name="worksheet">工作表</param>
         /// <param name="sheetName">the name of sheet</param>
         /// <param name="startIndex">数据行</param>
         /// <param name="errorIndex">错误列（最后一列数据+1）</param>
@@ -395,6 +398,11 @@ namespace H.Npoi.ExcelHelper
             var dataList = new List<T>();
             SheetData = new List<ImportDataModel>();
 
+            var members = typeof(T).GetProperties()
+                .Select(s => (ColumnPropertyAttribute)s.GetCustomAttribute(typeof(ColumnPropertyAttribute)))
+                .Where(s => s != null)
+                .Select(s => s.ColIndex).OrderBy(s => s).ToList();
+
             // 读取数据
             for (var rowIdx = startIndex; rowIdx < rowTotalCount; rowIdx++)
             {
@@ -406,10 +414,13 @@ namespace H.Npoi.ExcelHelper
                     Row = new List<ImportColumnModel>()
                 };
 
-                for (var colIdx = 0; colIdx < errorIndex; colIdx++)
+                if (row != null)
                 {
-                    var value = row.GetCell(colIdx)?.GetValue();
-                    rowData.Row.Add(new ImportColumnModel { ColIndex = colIdx, Value = value });
+                    foreach (var colIdx in members)
+                    {
+                        var value = row.GetCell(colIdx)?.GetValue();
+                        rowData.Row.Add(new ImportColumnModel { ColIndex = colIdx, Value = value });
+                    }
                 }
 
                 // 空行直接跳过
@@ -437,11 +448,10 @@ namespace H.Npoi.ExcelHelper
         /// 获取工作表数据
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        /// <param name="worksheet">工作表</param>
-        /// <param name="sheetNo"></param>
         /// <param name="startIndex">数据行</param>
         /// <param name="errorIndex">错误列（最后一列数据+1）</param>
         /// <param name="rowFunc">行数据获取后执行，常用于数据检查</param>
+        /// <param name="extraParam">额外参数</param>
         /// <returns></returns>
         private List<T> GetSheetData<T>(int startIndex, int errorIndex, Action<T, ImportSheetInfo> rowFunc, dynamic extraParam) where T : ImportBaseModel, new()
         {
@@ -466,6 +476,11 @@ namespace H.Npoi.ExcelHelper
             var dataList = new List<T>();
             SheetData = new List<ImportDataModel>();
 
+            var members = typeof(T).GetProperties()
+                .Select(s => (ColumnPropertyAttribute)s.GetCustomAttribute(typeof(ColumnPropertyAttribute)))
+                .Where(s => s != null)
+                .Select(s => s.ColIndex).OrderBy(s => s).ToList();
+
             // 读取数据
             for (var rowIdx = startIndex; rowIdx < rowTotalCount; rowIdx++)
             {
@@ -477,10 +492,13 @@ namespace H.Npoi.ExcelHelper
                     Row = new List<ImportColumnModel>()
                 };
 
-                for (var colIdx = 0; colIdx < errorIndex; colIdx++)
+                if (row != null) 
                 {
-                    var value = row.GetCell(colIdx)?.GetValue();
-                    rowData.Row.Add(new ImportColumnModel { ColIndex = colIdx, Value = value });
+                    foreach (var colIdx in members)
+                    {
+                        var value = row.GetCell(colIdx)?.GetValue();
+                        rowData.Row.Add(new ImportColumnModel { ColIndex = colIdx, Value = value });
+                    }
                 }
 
                 // 空行直接跳过
