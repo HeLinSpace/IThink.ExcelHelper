@@ -2,6 +2,9 @@
 
 namespace H.Npoi.ExcelHelper
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class ImportBaseModel
     {
         /// <summary>

@@ -4,7 +4,6 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using Microsoft.AspNetCore.Http;
 using NPOI.SS.UserModel;
 using NPOI.XSSF.UserModel;
 
@@ -15,24 +14,15 @@ namespace H.Npoi.ExcelHelper
     /// </summary>
     public static class NExcelHelper
     {
+
         /// <summary>
         /// open workbook by full path
         /// </summary>
         /// <param name="path"></param>
         /// <returns></returns>
-        public static ExcelImport Open(string path)
+        public static ReadExcel OpenRead(string path)
         {
-            return new ExcelImport(path);
-        }
-
-        /// <summary>
-        /// open workbook by request
-        /// </summary>
-        /// <param name="file">request formfile</param>
-        /// <returns></returns>
-        public static ExcelImport Open(IFormFile file)
-        {
-            return new ExcelImport(file);
+            return new ReadExcel(path);
         }
 
         /// <summary>
@@ -41,7 +31,28 @@ namespace H.Npoi.ExcelHelper
         /// <param name="stream"></param>
         /// <param name="isXlsx"></param>
         /// <returns></returns>
-        public static ExcelImport Open(Stream stream, bool isXlsx = true)
+        public static ReadExcel OpenRead(Stream stream, bool isXlsx = true)
+        {
+            return new ReadExcel(stream, isXlsx);
+        }
+
+        /// <summary>
+        /// open workbook by full path
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
+        public static ExcelImport OpenImport(string path)
+        {
+            return new ExcelImport(path);
+        }
+
+        /// <summary>
+        /// open workbook by stream
+        /// </summary>
+        /// <param name="stream"></param>
+        /// <param name="isXlsx"></param>
+        /// <returns></returns>
+        public static ExcelImport OpenImport(Stream stream, bool isXlsx = true)
         {
             return new ExcelImport(stream, isXlsx);
         }
@@ -349,6 +360,82 @@ namespace H.Npoi.ExcelHelper
                 default: //默认类型
                     return cell.ToString();
             }
+        }
+
+        /// <summary>
+        /// 获取NPOI的单元格的值
+        /// </summary>
+        /// <param name="cell"></param>
+        /// <returns></returns>
+        internal static SheetDataColumn GetCellValue(this ICell cell)
+        {
+            var result = new SheetDataColumn
+            {
+                ColIndex = cell.ColumnIndex
+            };
+
+            if (cell == null)
+            {
+                return result;
+            }
+
+            switch (cell.CellType)
+            {
+                case CellType.Blank:
+                    result.Value = string.Empty;
+                    result.ValueType = ValueType.String;
+                    break;
+                case CellType.Boolean:
+                    result.Value = cell.BooleanCellValue;
+                    result.ValueType = ValueType.Boolean;
+                    break;
+                case CellType.Error:
+                    result.Value = cell.ErrorCellValue.ToString();
+                    result.ValueType = ValueType.String;
+                    break;
+                case CellType.Numeric: //数字类型
+                    if (DateUtil.IsCellDateFormatted(cell))//日期类型
+                    {
+                        result.Value = cell.DateCellValue;
+                        result.ValueType = ValueType.DateTime;
+                    }
+                    else
+                    {
+                        result.Value = cell.NumericCellValue;
+                        result.ValueType = ValueType.Numeric;
+                    }
+                    break;
+                case CellType.String: //string 类型
+                    result.Value = cell.StringCellValue;
+                    result.ValueType = ValueType.String;
+                    break;
+                case CellType.Formula: //带公式类型
+                    try
+                    {
+                        XSSFFormulaEvaluator e = new XSSFFormulaEvaluator(cell.Sheet.Workbook);
+                        e.EvaluateInCell(cell);
+
+                        if (cell.CellType == CellType.Error)
+                        {
+                            return null;
+                        }
+                        result.Value = cell.ToString();
+                        result.ValueType = ValueType.String;
+                    }
+                    catch
+                    {
+                        result.Value = cell.StringCellValue.ToString();
+                        result.ValueType = ValueType.String;
+                    }
+                    break;
+                case CellType.Unknown: //无法识别类型
+                default: //默认类型
+                    result.Value = cell.ToString();
+                    result.ValueType = ValueType.String;
+                    break;
+            }
+
+            return result;
         }
 
         /// <summary>

@@ -2,6 +2,9 @@
 
 namespace H.Npoi.ExcelHelper
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class ImportDataModel : ImportBaseModel
     {
         /// <summary> 
@@ -10,6 +13,9 @@ namespace H.Npoi.ExcelHelper
         public List<ImportColumnModel> Row { get; set; }
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
     public class ImportColumnModel
     {
         /// <summary> 

@@ -9,7 +9,7 @@ namespace H.Npoi.ExcelHelper
     /// <summary>
     /// Excel Helper for NPOI.
     /// </summary>
-    public abstract class ImportSheetInfo
+    public class ImportSheetInfo
     {
         private ICellStyle _defaultCellStyle;
 
@@ -159,6 +159,7 @@ namespace H.Npoi.ExcelHelper
         /// <param name="startIndex">数据行</param>
         /// <param name="errorIndex">错误列（最后一列数据+1）</param>
         /// <param name="rowFunc">行数据获取后执行，常用于数据检查</param>
+        /// <param name="extraParam">额外参数</param>
         /// <returns></returns>
         public List<T> GetSheetData<T>(int sheetNo, int startIndex, int errorIndex, Action<T, ImportSheetInfo> rowFunc, dynamic extraParam) where T : ImportBaseModel, new()
         {
@@ -180,6 +181,7 @@ namespace H.Npoi.ExcelHelper
         /// <param name="startIndex">数据行</param>
         /// <param name="errorIndex">错误列（最后一列数据+1）</param>
         /// <param name="rowFunc">行数据获取后执行，常用于数据检查</param>
+        /// <param name="extraParam">额外参数</param>
         /// <returns></returns>
         public List<T> GetSheetData<T>(string sheetName, int startIndex, int errorIndex, Action<T, ImportSheetInfo> rowFunc, dynamic extraParam) where T : ImportBaseModel, new()
         {
@@ -215,7 +217,7 @@ namespace H.Npoi.ExcelHelper
         /// </summary>
         /// <typeparam name="T">接收数据的模型，需从Excel中获取的属性必须标记<see cref="ColumnPropertyAttribute"/></typeparam>
         /// <param name="errRowList">写入数据源</param>
-        /// <param name="filePath">保存文件名</param>
+        /// <param name="errorColName">错误列列名</param>
         /// <param name="cellStyle">错误列格式</param>
         /// <returns></returns>
         public void WriteError<T>(List<T> errRowList, string errorColName = "Error", ICellStyle cellStyle = null) where T : ImportBaseModel
@@ -248,6 +250,7 @@ namespace H.Npoi.ExcelHelper
         /// <typeparam name="T">接收数据的模型，需从Excel中获取的属性必须标记<see cref="ColumnPropertyAttribute"/></typeparam>
         /// <param name="errRowList">写入数据源</param>
         /// <param name="filePath">保存文件名</param>
+        /// <param name="errorColName">错误列列名</param>
         /// <param name="cellStyle">错误列格式</param>
         /// <returns></returns>
         public void WriteErrorFile<T>(List<T> errRowList, string filePath, string errorColName = "Error", ICellStyle cellStyle = null) where T : ImportBaseModel
@@ -284,7 +287,7 @@ namespace H.Npoi.ExcelHelper
         /// <param name="errRowList">写入数据源</param>
         /// <param name="startIndex">数据行</param>
         /// <param name="errorIndex">错误列</param>
-        /// <param name="filePath">保存文件名</param>
+        /// <param name="errorColName">错误列列名</param>
         /// <param name="cellStyle">错误列格式</param>
         /// <returns></returns>
         public ISheet WriteError<T>(ISheet worksheet, List<T> errRowList, int startIndex, int errorIndex, string errorColName = "Error", ICellStyle cellStyle = null) where T : ImportBaseModel
@@ -317,12 +320,12 @@ namespace H.Npoi.ExcelHelper
         /// 写入错误文件
         /// </summary>
         /// <typeparam name="T">接收数据的模型，需从Excel中获取的属性必须标记<see cref="ColumnPropertyAttribute"/></typeparam>
-        /// <param name="workbook">工作簿</param>
         /// <param name="worksheet">工作表</param>
         /// <param name="errRowList">写入数据源</param>
         /// <param name="startIndex">数据行</param>
         /// <param name="errorIndex">错误列</param>
         /// <param name="filePath">保存文件名</param>
+        /// <param name="errorColName">错误列列名</param>
         /// <param name="cellStyle">错误列格式</param>
         /// <returns></returns>
         public void WriteErrorFile<T>(ISheet worksheet, List<T> errRowList, int startIndex, int errorIndex, string filePath, string errorColName = "Error", ICellStyle cellStyle = null) where T : ImportBaseModel
@@ -351,6 +354,9 @@ namespace H.Npoi.ExcelHelper
             worksheet.Workbook.Save(filePath);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public void Dispose()
         {
             if (Workbook != null)
@@ -370,8 +376,6 @@ namespace H.Npoi.ExcelHelper
         /// 获取工作表数据
         /// </summary>
         /// <typeparam name="T">接收数据的模型，需从Excel中获取的属性必须标记<see cref="ColumnPropertyAttribute"/></typeparam>
-        /// <param name="worksheet">工作表</param>
-        /// <param name="sheetNo"></param>
         /// <param name="startIndex">数据行</param>
         /// <param name="errorIndex">错误列（最后一列+1）</param>
         /// <param name="rowFunc">行数据获取后执行，常用于数据检查</param>
@@ -520,6 +524,67 @@ namespace H.Npoi.ExcelHelper
             }
 
             return dataList;
+        }
+
+        /// <summary>
+        /// 获取工作表数据
+        /// </summary>
+        /// <param name="sheetNo"></param>
+        /// <returns></returns>
+        internal SheetDataModel GetSheetData(int sheetNo)
+        {
+            CurrentSheet = Workbook.GetSheetAt(sheetNo);
+
+            if (CurrentSheet == null)
+            {
+                throw new ArgumentNullException("Worksheet");
+            }
+
+            var sheetData = new SheetDataModel
+            {
+                SheetName = CurrentSheet.SheetName,
+                SheetNo = sheetNo,
+                Rows = new List<SheetDataRow>()
+            };
+
+            // 获得总行数
+            int rowTotalCount = CurrentSheet.LastRowNum + 1;
+
+            LastRowNum = CurrentSheet.LastRowNum;
+
+            // 读取数据
+            for (var rowIdx = 0; rowIdx < rowTotalCount; rowIdx++)
+            {
+                // 行数据
+                var row = CurrentSheet.GetRow(rowIdx);
+
+                var firstCellNum = row.FirstCellNum;
+                var lastCellNum = row.LastCellNum;
+                var rowData = new SheetDataRow
+                {
+                    RowIndex = rowIdx,
+                    Columns = new List<SheetDataColumn>()
+                };
+
+                if (row != null)
+                {
+                    for (var colIdx = firstCellNum; colIdx <= lastCellNum; colIdx++)
+                    {
+                        var value = row.GetCell(colIdx)?.GetCellValue() ?? new SheetDataColumn { ColIndex = colIdx ,ValueType = ValueType.None };
+                        rowData.Columns.Add(value);
+                    }
+                }
+
+                // 空行直接跳过
+                if (!rowData.Columns.Any(s => s.Value != null))
+                {
+                    continue;
+                }
+
+                sheetData.Rows.Add(rowData);
+            }
+
+            return sheetData;
         }
 
         #endregion

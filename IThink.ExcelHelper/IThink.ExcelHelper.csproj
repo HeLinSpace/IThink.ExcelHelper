@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TargetFrameworks>netcoreapp3.1;net45</TargetFrameworks>
     <AssemblyName>H.Npoi.ExcelHelper</AssemblyName>
     <RootNamespace>H.Npoi.ExcelHelper</RootNamespace>
     <PackageProjectUrl>https://github.com/HeLinSpace/IThink.ExcelHelper</PackageProjectUrl>
@@ -12,8 +12,7 @@
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <SignAssembly>false</SignAssembly>
     <Authors>helin</Authors>
-    <Version>1.0.1</Version>
-    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <Version>1.0.3</Version>
     <IncludeSymbols>True</IncludeSymbols>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
   </PropertyGroup>
@@ -23,7 +22,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Http.Features" Version="3.1.30" />
+    <PackageReference Include="Microsoft.CSharp" Version="4.5.0" />
     <PackageReference Include="NPOI" Version="2.5.6" />
   </ItemGroup>
 
@@ -32,9 +31,10 @@
       <Pack>True</Pack>
       <PackagePath></PackagePath>
     </None>
-    <None Include="..\README.md">
+    <None Include="README.md">
       <Pack>True</Pack>
       <PackagePath>\</PackagePath>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
 
