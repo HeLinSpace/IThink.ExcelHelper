@@ -1,4 +1,5 @@
 # IThink.ExcelHelper
+nuget add H.Npoi.ExcelHelper
 work with npoi and help to export or import easier.
 
 how to use!
