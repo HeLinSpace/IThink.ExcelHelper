@@ -6,7 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="H.Npoi.ExcelHelper" Version="1.0.1" />
+    <ProjectReference Include="..\IThink.ExcelHelper\IThink.ExcelHelper.csproj" />
   </ItemGroup>
 
   <ItemGroup>

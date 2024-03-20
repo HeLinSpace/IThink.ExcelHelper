@@ -1,8 +1,7 @@
-﻿using System;
+﻿using NPOI.SS.UserModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
-using NPOI.SS.UserModel;
 
 namespace H.Npoi.ExcelHelper
 {
@@ -35,6 +34,8 @@ namespace H.Npoi.ExcelHelper
         /// last row contained n this sheet (0-based)
         /// </summary>
         public int CurrentLastRowNum { get; internal set; }
+
+        internal bool AutoTransferDateValue { get;  set; }
 
         /// <summary>
         /// current worksheet
@@ -141,7 +142,7 @@ namespace H.Npoi.ExcelHelper
                 {
                     for (var colIdx = firstCellNum; colIdx <= lastCellNum; colIdx++)
                     {
-                        var value = row.GetCell(colIdx)?.GetCellValue() ?? new SheetDataColumn { ColIndex = colIdx ,ValueType = ValueType.None };
+                        var value = row.GetCell(colIdx)?.GetCellValue(AutoTransferDateValue) ?? new SheetDataColumn { ColIndex = colIdx, ValueType = ValueType.None };
                         rowData.Columns.Add(value);
                     }
                 }

@@ -625,7 +625,7 @@
             <param name="cell"></param>
             <returns></returns>
         </member>
-        <member name="M:H.Npoi.ExcelHelper.NExcelHelper.GetCellValue(NPOI.SS.UserModel.ICell)">
+        <member name="M:H.Npoi.ExcelHelper.NExcelHelper.GetCellValue(NPOI.SS.UserModel.ICell,System.Boolean)">
             <summary>
             获取NPOI的单元格的值
             </summary>
@@ -784,10 +784,20 @@
             </summary>
             <param name="workbook"></param>
         </member>
-        <member name="P:H.Npoi.ExcelHelper.ReadExcel.AllSheetData">
+        <member name="M:H.Npoi.ExcelHelper.ReadExcel.GetAllSheetData(System.Boolean)">
             <summary>
             all sheet original data.
             </summary>
+            <param name="autoTransferDateValue">自动识别日期型数据 转换为Datetime</param>
+            <returns></returns>
+        </member>
+        <member name="M:H.Npoi.ExcelHelper.ReadExcel.GetSheetData(System.Int32,System.Boolean)">
+            <summary>
+            all sheet original data.
+            </summary>
+            <param name="sheetNo">the index of sheet</param>
+            <param name="autoTransferDateValue">自动识别日期型数据 转换为Datetime</param>
+            <returns></returns>
         </member>
         <member name="M:H.Npoi.ExcelHelper.ReadExcel.#ctor(System.String)">
             <summary>

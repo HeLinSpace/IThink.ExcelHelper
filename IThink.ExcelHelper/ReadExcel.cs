@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 
 using NPOI.HSSF.UserModel;
 using NPOI.SS.UserModel;
@@ -27,17 +28,36 @@ namespace H.Npoi.ExcelHelper
         /// <summary>
         /// all sheet original data.
         /// </summary>
-        public List<SheetDataModel> AllSheetData
+        /// <param name="autoTransferDateValue">自动识别日期型数据 转换为Datetime</param>
+        /// <returns></returns>
+        public List<SheetDataModel> GetAllSheetData(bool autoTransferDateValue = false)
         {
-            get
-            {
-                if (_allSheetData == null)
-                {
-                    ReadAllSheets();
-                }
+            AutoTransferDateValue = autoTransferDateValue;
 
-                return _allSheetData;
+            if (_allSheetData == null)
+            {
+                ReadAllSheets();
             }
+
+            return _allSheetData;
+        }
+
+        /// <summary>
+        /// all sheet original data.
+        /// </summary>
+        /// <param name="sheetNo">the index of sheet</param>
+        /// <param name="autoTransferDateValue">自动识别日期型数据 转换为Datetime</param>
+        /// <returns></returns>
+        public SheetDataModel GetSheetData(int sheetNo, bool autoTransferDateValue = false)
+        {
+            AutoTransferDateValue = autoTransferDateValue;
+
+            if (_allSheetData != null)
+            {
+                return _allSheetData.FirstOrDefault(s => s.SheetNo == sheetNo);
+            }
+
+            return base.GetSheetData(sheetNo);
         }
 
         /// <summary>
@@ -96,11 +116,12 @@ namespace H.Npoi.ExcelHelper
 
         private void ReadAllSheets() 
         {
+            _allSheetData = new List<SheetDataModel>();
             var sheetCount = Workbook.NumberOfSheets;
 
             for (var index = 0; index < sheetCount; index++) 
             {
-                var sheetData = GetSheetData(index);
+                var sheetData = base.GetSheetData(index);
                 _allSheetData.Add(sheetData);
             }
         }

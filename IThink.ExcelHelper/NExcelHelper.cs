@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Reflection;
 using NPOI.SS.UserModel;
 using NPOI.XSSF.UserModel;
+using SixLabors.ImageSharp;
 
 namespace H.Npoi.ExcelHelper
 {
@@ -367,7 +367,7 @@ namespace H.Npoi.ExcelHelper
         /// </summary>
         /// <param name="cell"></param>
         /// <returns></returns>
-        internal static SheetDataColumn GetCellValue(this ICell cell)
+        internal static SheetDataColumn GetCellValue(this ICell cell, bool autoTransferDateValue = false)
         {
             var result = new SheetDataColumn
             {
@@ -406,6 +406,17 @@ namespace H.Npoi.ExcelHelper
                     }
                     break;
                 case CellType.String: //string 类型
+
+                    if (autoTransferDateValue)
+                    {
+                        if (DateTime.TryParse(cell.StringCellValue, out DateTime dateTime))
+                        {
+                            result.Value = dateTime;
+                            result.ValueType = ValueType.DateTime;
+                            break;
+                        }
+                    }
+
                     result.Value = cell.StringCellValue;
                     result.ValueType = ValueType.String;
                     break;

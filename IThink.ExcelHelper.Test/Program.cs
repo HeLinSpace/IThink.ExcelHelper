@@ -12,10 +12,13 @@ namespace IThink.ExcelHelper.Test
         {
             Console.WriteLine("Hello World!");
 
-            var template = "./AppData/TestImport.xlsx";
+            using var readExcel = NExcelHelper.OpenRead(@"C:\Users\user\Desktop\河道指标.xlsx");
+            var list2 = readExcel.GetSheetData(0, true);
 
+
+            var template = "./AppData/TestImport.xlsx";
             // test import
-            using (var w = NExcelHelper.Open(template))
+            using (var w = NExcelHelper.OpenImport(template))
             {
                 var res = w.Import<TestImport>(0, 1, 4, RowCheck, ImportBusiness);
             }
