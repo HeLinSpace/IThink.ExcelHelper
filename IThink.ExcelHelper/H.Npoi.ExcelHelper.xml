@@ -308,7 +308,56 @@
             <param name="cellStyle">错误列格式</param>
             <returns></returns>
         </member>
-        <member name="M:H.Npoi.ExcelHelper.ImportSheetInfo.WriteError``1(NPOI.SS.UserModel.ISheet,System.Collections.Generic.List{``0},System.Int32,System.Int32,System.String,NPOI.SS.UserModel.ICellStyle)">
+        <member name="M:H.Npoi.ExcelHelper.ImportSheetInfo.WriteErrorFile``1(NPOI.SS.UserModel.ISheet,System.Collections.Generic.List{``0},System.Int32,System.Int32,System.String,System.String,NPOI.SS.UserModel.ICellStyle)">
+            <summary>
+            写入错误文件
+            </summary>
+            <typeparam name="T">接收数据的模型，需从Excel中获取的属性必须标记<see cref="T:H.Npoi.ExcelHelper.ColumnPropertyAttribute"/></typeparam>
+            <param name="worksheet">工作表</param>
+            <param name="errRowList">写入数据源</param>
+            <param name="startIndex">数据行</param>
+            <param name="errorIndex">错误列</param>
+            <param name="filePath">保存文件名</param>
+            <param name="errorColName">错误列列名</param>
+            <param name="cellStyle">错误列格式</param>
+            <returns></returns>
+        </member>
+        <member name="M:H.Npoi.ExcelHelper.ImportSheetInfo.WriteErrorStream``1(System.Collections.Generic.List{``0},System.IO.Stream,System.String,NPOI.SS.UserModel.ICellStyle)">
+            <summary>
+            写入错误文件
+            </summary>
+            <typeparam name="T">接收数据的模型，需从Excel中获取的属性必须标记<see cref="T:H.Npoi.ExcelHelper.ColumnPropertyAttribute"/></typeparam>
+            <param name="errRowList">写入数据源</param>
+            <param name="errorColName">错误列列名</param>
+            <param name="stream"></param>
+            <param name="cellStyle">错误列格式</param>
+            <returns></returns>
+        </member>
+        <member name="M:H.Npoi.ExcelHelper.ImportSheetInfo.WriteErrorStream``1(NPOI.SS.UserModel.ISheet,System.Collections.Generic.List{``0},System.Int32,System.Int32,System.IO.Stream,System.String,NPOI.SS.UserModel.ICellStyle)">
+            <summary>
+            写入错误文件
+            </summary>
+            <typeparam name="T">接收数据的模型，需从Excel中获取的属性必须标记<see cref="T:H.Npoi.ExcelHelper.ColumnPropertyAttribute"/></typeparam>
+            <param name="worksheet">工作表</param>
+            <param name="errRowList">写入数据源</param>
+            <param name="startIndex">数据行</param>
+            <param name="errorIndex">错误列</param>
+            <param name="stream"></param>
+            <param name="errorColName">错误列列名</param>
+            <param name="cellStyle">错误列格式</param>
+            <returns></returns>
+        </member>
+        <member name="M:H.Npoi.ExcelHelper.ImportSheetInfo.WriteErrorByte``1(System.Collections.Generic.List{``0},System.String,NPOI.SS.UserModel.ICellStyle)">
+            <summary>
+            写入错误文件
+            </summary>
+            <typeparam name="T">接收数据的模型，需从Excel中获取的属性必须标记<see cref="T:H.Npoi.ExcelHelper.ColumnPropertyAttribute"/></typeparam>
+            <param name="errRowList">写入数据源</param>
+            <param name="errorColName">错误列列名</param>
+            <param name="cellStyle">错误列格式</param>
+            <returns></returns>
+        </member>
+        <member name="M:H.Npoi.ExcelHelper.ImportSheetInfo.WriteErrorByte``1(NPOI.SS.UserModel.ISheet,System.Collections.Generic.List{``0},System.Int32,System.Int32,System.String,NPOI.SS.UserModel.ICellStyle)">
             <summary>
             写入错误文件
             </summary>
@@ -321,7 +370,7 @@
             <param name="cellStyle">错误列格式</param>
             <returns></returns>
         </member>
-        <member name="M:H.Npoi.ExcelHelper.ImportSheetInfo.WriteErrorFile``1(NPOI.SS.UserModel.ISheet,System.Collections.Generic.List{``0},System.Int32,System.Int32,System.String,System.String,NPOI.SS.UserModel.ICellStyle)">
+        <member name="M:H.Npoi.ExcelHelper.ImportSheetInfo.WriteError``1(NPOI.SS.UserModel.ISheet,System.Collections.Generic.List{``0},System.Int32,System.Int32,System.String,NPOI.SS.UserModel.ICellStyle)">
             <summary>
             写入错误文件
             </summary>
@@ -330,7 +379,6 @@
             <param name="errRowList">写入数据源</param>
             <param name="startIndex">数据行</param>
             <param name="errorIndex">错误列</param>
-            <param name="filePath">保存文件名</param>
             <param name="errorColName">错误列列名</param>
             <param name="cellStyle">错误列格式</param>
             <returns></returns>
@@ -554,6 +602,13 @@
             </summary>
             <param name="workbook"></param>
             <param name="filePath"></param>
+        </member>
+        <member name="M:H.Npoi.ExcelHelper.NExcelHelper.Save(NPOI.SS.UserModel.IWorkbook,System.IO.Stream)">
+            <summary>
+            保存
+            </summary>
+            <param name="workbook"></param>
+            <param name="stream"></param>
         </member>
         <member name="M:H.Npoi.ExcelHelper.NExcelHelper.Save(NPOI.SS.UserModel.IWorkbook)">
             <summary>

@@ -79,6 +79,16 @@ namespace H.Npoi.ExcelHelper
         /// 保存
         /// </summary>
         /// <param name="workbook"></param>
+        /// <param name="stream"></param>
+        public static void Save(this IWorkbook workbook, Stream stream)
+        {
+            workbook.Write(stream);
+        }
+
+        /// <summary>
+        /// 保存
+        /// </summary>
+        /// <param name="workbook"></param>
         public static byte[] Save(this IWorkbook workbook)
         {
             using (var fs = new MemoryStream())

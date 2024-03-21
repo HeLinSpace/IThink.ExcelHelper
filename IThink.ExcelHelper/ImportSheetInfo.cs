@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using NPOI.SS.UserModel;
@@ -222,26 +223,7 @@ namespace H.Npoi.ExcelHelper
         /// <returns></returns>
         public void WriteError<T>(List<T> errRowList, string errorColName = "Error", ICellStyle cellStyle = null) where T : ImportBaseModel
         {
-            if (cellStyle == null)
-            {
-                cellStyle = _defaultCellStyle;
-            }
-
-            //写错误列标题
-            var errorHead = CurrentSheet.GetRow(DataStartIndex - 1).CreateCell(ErrorColIndex);
-            errorHead.SetCellValue(errorColName);
-            errorHead.CellStyle = cellStyle;
-
-            //保持和导入的文件中的排序一致
-            errRowList = errRowList.OrderBy(o => o.RowNo).ToList();
-
-            // 写错误原因数据
-            foreach (var item in errRowList)
-            {
-                var errorCell = CurrentSheet.GetRow(item.RowNo).CreateCell(ErrorColIndex);
-                errorCell.SetCellValue(item.ErrorMsg);
-                errorCell.CellStyle = cellStyle;
-            }
+            WriteError(CurrentSheet, errRowList, DataStartIndex, ErrorColIndex, errorColName, cellStyle);
         }
 
         /// <summary>
@@ -255,28 +237,93 @@ namespace H.Npoi.ExcelHelper
         /// <returns></returns>
         public void WriteErrorFile<T>(List<T> errRowList, string filePath, string errorColName = "Error", ICellStyle cellStyle = null) where T : ImportBaseModel
         {
-            if (cellStyle == null)
-            {
-                cellStyle = _defaultCellStyle;
-            }
-
-            //写错误列标题
-            var errorHead = CurrentSheet.GetRow(DataStartIndex - 1).CreateCell(ErrorColIndex);
-            errorHead.SetCellValue(errorColName);
-            errorHead.CellStyle = cellStyle;
-
-            //保持和导入的文件中的排序一致
-            errRowList = errRowList.OrderBy(o => o.RowNo).ToList();
-
-            // 写错误原因数据
-            foreach (var item in errRowList)
-            {
-                var errorCell = CurrentSheet.GetRow(item.RowNo).CreateCell(ErrorColIndex);
-                errorCell.SetCellValue(item.ErrorMsg);
-                errorCell.CellStyle = cellStyle;
-            }
+            WriteError(CurrentSheet, errRowList, DataStartIndex, ErrorColIndex, errorColName, cellStyle);
 
             Workbook.Save(filePath);
+        }
+
+        /// <summary>
+        /// 写入错误文件
+        /// </summary>
+        /// <typeparam name="T">接收数据的模型，需从Excel中获取的属性必须标记<see cref="ColumnPropertyAttribute"/></typeparam>
+        /// <param name="worksheet">工作表</param>
+        /// <param name="errRowList">写入数据源</param>
+        /// <param name="startIndex">数据行</param>
+        /// <param name="errorIndex">错误列</param>
+        /// <param name="filePath">保存文件名</param>
+        /// <param name="errorColName">错误列列名</param>
+        /// <param name="cellStyle">错误列格式</param>
+        /// <returns></returns>
+        public void WriteErrorFile<T>(ISheet worksheet, List<T> errRowList, int startIndex, int errorIndex, string filePath, string errorColName = "Error", ICellStyle cellStyle = null) where T : ImportBaseModel
+        {
+            WriteError(worksheet, errRowList, startIndex, errorIndex, errorColName, cellStyle);
+            worksheet.Workbook.Save(filePath);
+        }
+
+        /// <summary>
+        /// 写入错误文件
+        /// </summary>
+        /// <typeparam name="T">接收数据的模型，需从Excel中获取的属性必须标记<see cref="ColumnPropertyAttribute"/></typeparam>
+        /// <param name="errRowList">写入数据源</param>
+        /// <param name="errorColName">错误列列名</param>
+        /// <param name="stream"></param>
+        /// <param name="cellStyle">错误列格式</param>
+        /// <returns></returns>
+        public void WriteErrorStream<T>(List<T> errRowList, Stream stream, string errorColName = "Error", ICellStyle cellStyle = null) where T : ImportBaseModel
+        {
+            WriteError(CurrentSheet, errRowList, DataStartIndex, ErrorColIndex, errorColName, cellStyle);
+
+            Workbook.Save(stream);
+        }
+
+        /// <summary>
+        /// 写入错误文件
+        /// </summary>
+        /// <typeparam name="T">接收数据的模型，需从Excel中获取的属性必须标记<see cref="ColumnPropertyAttribute"/></typeparam>
+        /// <param name="worksheet">工作表</param>
+        /// <param name="errRowList">写入数据源</param>
+        /// <param name="startIndex">数据行</param>
+        /// <param name="errorIndex">错误列</param>
+        /// <param name="stream"></param>
+        /// <param name="errorColName">错误列列名</param>
+        /// <param name="cellStyle">错误列格式</param>
+        /// <returns></returns>
+        public void WriteErrorStream<T>(ISheet worksheet, List<T> errRowList, int startIndex, int errorIndex, Stream stream, string errorColName = "Error", ICellStyle cellStyle = null) where T : ImportBaseModel
+        {
+            WriteError(worksheet, errRowList, startIndex, errorIndex, errorColName, cellStyle);
+            worksheet.Workbook.Save(stream);
+        }
+
+        /// <summary>
+        /// 写入错误文件
+        /// </summary>
+        /// <typeparam name="T">接收数据的模型，需从Excel中获取的属性必须标记<see cref="ColumnPropertyAttribute"/></typeparam>
+        /// <param name="errRowList">写入数据源</param>
+        /// <param name="errorColName">错误列列名</param>
+        /// <param name="cellStyle">错误列格式</param>
+        /// <returns></returns>
+        public byte[] WriteErrorByte<T>(List<T> errRowList, string errorColName = "Error", ICellStyle cellStyle = null) where T : ImportBaseModel
+        {
+            WriteError(CurrentSheet, errRowList, DataStartIndex, ErrorColIndex, errorColName, cellStyle);
+
+            return Workbook.Save();
+        }
+
+        /// <summary>
+        /// 写入错误文件
+        /// </summary>
+        /// <typeparam name="T">接收数据的模型，需从Excel中获取的属性必须标记<see cref="ColumnPropertyAttribute"/></typeparam>
+        /// <param name="worksheet">工作表</param>
+        /// <param name="errRowList">写入数据源</param>
+        /// <param name="startIndex">数据行</param>
+        /// <param name="errorIndex">错误列</param>
+        /// <param name="errorColName">错误列列名</param>
+        /// <param name="cellStyle">错误列格式</param>
+        /// <returns></returns>
+        public byte[] WriteErrorByte<T>(ISheet worksheet, List<T> errRowList, int startIndex, int errorIndex, string errorColName = "Error", ICellStyle cellStyle = null) where T : ImportBaseModel
+        {
+            WriteError(worksheet, errRowList, startIndex, errorIndex, errorColName, cellStyle);
+            return worksheet.Workbook.Save();
         }
 
         /// <summary>
@@ -314,44 +361,6 @@ namespace H.Npoi.ExcelHelper
             }
 
             return worksheet;
-        }
-
-        /// <summary>
-        /// 写入错误文件
-        /// </summary>
-        /// <typeparam name="T">接收数据的模型，需从Excel中获取的属性必须标记<see cref="ColumnPropertyAttribute"/></typeparam>
-        /// <param name="worksheet">工作表</param>
-        /// <param name="errRowList">写入数据源</param>
-        /// <param name="startIndex">数据行</param>
-        /// <param name="errorIndex">错误列</param>
-        /// <param name="filePath">保存文件名</param>
-        /// <param name="errorColName">错误列列名</param>
-        /// <param name="cellStyle">错误列格式</param>
-        /// <returns></returns>
-        public void WriteErrorFile<T>(ISheet worksheet, List<T> errRowList, int startIndex, int errorIndex, string filePath, string errorColName = "Error", ICellStyle cellStyle = null) where T : ImportBaseModel
-        {
-            if (cellStyle == null)
-            {
-                cellStyle = _defaultCellStyle;
-            }
-
-            //写错误列标题
-            var errorHead = worksheet.GetRow(startIndex - 1).CreateCell(errorIndex);
-            errorHead.SetCellValue(errorColName);
-            errorHead.CellStyle = cellStyle;
-
-            //保持和导入的文件中的排序一致
-            errRowList = errRowList.OrderBy(o => o.RowNo).ToList();
-
-            // 写错误原因数据
-            foreach (var item in errRowList)
-            {
-                var errorCell = worksheet.GetRow(item.RowNo).CreateCell(errorIndex);
-                errorCell.SetCellValue(item.ErrorMsg);
-                errorCell.CellStyle = cellStyle;
-            }
-
-            worksheet.Workbook.Save(filePath);
         }
 
         /// <summary>
@@ -496,7 +505,7 @@ namespace H.Npoi.ExcelHelper
                     Row = new List<ImportColumnModel>()
                 };
 
-                if (row != null) 
+                if (row != null)
                 {
                     foreach (var colIdx in members)
                     {
@@ -570,7 +579,7 @@ namespace H.Npoi.ExcelHelper
                 {
                     for (var colIdx = firstCellNum; colIdx <= lastCellNum; colIdx++)
                     {
-                        var value = row.GetCell(colIdx)?.GetCellValue() ?? new SheetDataColumn { ColIndex = colIdx ,ValueType = ValueType.None };
+                        var value = row.GetCell(colIdx)?.GetCellValue() ?? new SheetDataColumn { ColIndex = colIdx, ValueType = ValueType.None };
                         rowData.Columns.Add(value);
                     }
                 }

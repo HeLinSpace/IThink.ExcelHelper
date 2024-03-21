@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using H.Npoi.ExcelHelper;
 using NPOI.XSSF.UserModel;
@@ -96,6 +97,12 @@ namespace IThink.ExcelHelper.Test
         /// <returns></returns>
         private static dynamic ImportBusiness(List<TestImport> list, ImportSheetInfo excelImport)
         {
+
+            using (var fs = new FileStream("./error.xlsx", FileMode.Create, FileAccess.Write))
+            {
+                excelImport.WriteErrorStream(list, fs);
+            }
+
             // has error
             if (list.Any(s => !string.IsNullOrEmpty(s.ErrorMsg)))
             {
