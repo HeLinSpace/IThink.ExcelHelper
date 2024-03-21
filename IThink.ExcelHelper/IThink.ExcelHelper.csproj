@@ -1,20 +1,21 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>netcoreapp3.1;</TargetFrameworks>
+    <TargetFrameworks>netcoreapp3.1;net6.0</TargetFrameworks>
     <AssemblyName>H.Npoi.ExcelHelper</AssemblyName>
     <RootNamespace>H.Npoi.ExcelHelper</RootNamespace>
     <PackageProjectUrl>https://github.com/HeLinSpace/IThink.ExcelHelper</PackageProjectUrl>
     <RepositoryUrl>https://github.com/HeLinSpace/IThink.ExcelHelper.git</RepositoryUrl>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
-    <PackageReleaseNotes>work with npoi and help to export or import easier.</PackageReleaseNotes>
+    <PackageReleaseNotes>add net6.0 support</PackageReleaseNotes>
     <Description>work with npoi and help to export or import easier.</Description>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <SignAssembly>false</SignAssembly>
     <Authors>helin</Authors>
-    <Version>1.0.5</Version>
+    <Version>1.0.7</Version>
     <IncludeSymbols>True</IncludeSymbols>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -22,8 +23,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.CSharp" Version="4.5.0" />
-    <PackageReference Include="NPOI" Version="2.6.2" />
+    <PackageReference Include="NPOI" Version="2.7.0-rc1" />
   </ItemGroup>
 
   <ItemGroup>
