@@ -437,7 +437,7 @@ namespace H.Npoi.ExcelHelper
                 }
 
                 // 空行直接跳过
-                if (!rowData.Row.Any(s => s.Value != null))
+                if (!rowData.Row.Any(s => s.Value != null || string.IsNullOrEmpty(Convert.ToString(s.Value))))
                 {
                     continue;
                 }
@@ -515,7 +515,7 @@ namespace H.Npoi.ExcelHelper
                 }
 
                 // 空行直接跳过
-                if (!rowData.Row.Any(s => s.Value != null))
+                if (!rowData.Row.Any(s => s.Value != null || string.IsNullOrEmpty(Convert.ToString(s.Value))))
                 {
                     continue;
                 }
@@ -585,7 +585,7 @@ namespace H.Npoi.ExcelHelper
                 }
 
                 // 空行直接跳过
-                if (!rowData.Columns.Any(s => s.Value != null))
+                if (!rowData.Columns.Any(s => s.Value != null || string.IsNullOrEmpty(Convert.ToString(s.Value))))
                 {
                     continue;
                 }
