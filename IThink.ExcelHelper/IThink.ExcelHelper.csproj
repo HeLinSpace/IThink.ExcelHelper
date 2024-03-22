@@ -7,12 +7,12 @@
     <PackageProjectUrl>https://github.com/HeLinSpace/IThink.ExcelHelper</PackageProjectUrl>
     <RepositoryUrl>https://github.com/HeLinSpace/IThink.ExcelHelper.git</RepositoryUrl>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
-    <PackageReleaseNotes>add net6.0 support</PackageReleaseNotes>
+    <PackageReleaseNotes>flow npoi versions</PackageReleaseNotes>
     <Description>work with npoi and help to export or import easier.</Description>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <SignAssembly>false</SignAssembly>
     <Authors>helin</Authors>
-    <Version>1.0.7.1</Version>
+    <Version>2.5.5</Version>
     <IncludeSymbols>True</IncludeSymbols>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -23,7 +23,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="NPOI" Version="2.7.0-rc1" />
+    <PackageReference Include="NPOI" Version="2.5.5" />
   </ItemGroup>
 
   <ItemGroup>

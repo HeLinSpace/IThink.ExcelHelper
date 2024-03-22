@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Reflection;
 using NPOI.SS.UserModel;
 using NPOI.XSSF.UserModel;
-using SixLabors.ImageSharp;
 
 namespace H.Npoi.ExcelHelper
 {
