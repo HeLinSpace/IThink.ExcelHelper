@@ -616,6 +616,17 @@
             </summary>
             <param name="workbook"></param>
         </member>
+        <member name="M:H.Npoi.ExcelHelper.NExcelHelper.Export``1(System.Collections.Generic.List{``0},System.String,System.Int32,System.Func{NPOI.SS.UserModel.IWorkbook,System.Int32,System.Int32,NPOI.SS.UserModel.ICellStyle})">
+            <summary>
+            执行导出
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="dataList"></param>
+            <param name="dataRowIndex">数据行</param>
+            <param name="templateFullPath">模板全路径</param>
+            <param name="cellStyleFunc">T1:current workbook  T2:row index T3:col index</param>
+            <returns></returns>
+        </member>
         <member name="M:H.Npoi.ExcelHelper.NExcelHelper.Export``1(System.Collections.Generic.List{``0},System.String,System.Int32,System.Func{NPOI.SS.UserModel.IWorkbook,System.Int32,NPOI.SS.UserModel.ICellStyle})">
             <summary>
             执行导出
@@ -625,6 +636,17 @@
             <param name="dataRowIndex">数据行</param>
             <param name="templateFullPath">模板全路径</param>
             <param name="cellStyleFunc">T1:current workbook  T2:col index</param>
+            <returns></returns>
+        </member>
+        <member name="M:H.Npoi.ExcelHelper.NExcelHelper.ExportWorkbook``1(System.Collections.Generic.List{``0},System.String,System.Int32,System.Func{NPOI.SS.UserModel.IWorkbook,System.Int32,System.Int32,NPOI.SS.UserModel.ICellStyle})">
+            <summary>
+            
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="dataList"></param>
+            <param name="templateFullPath"></param>
+            <param name="dataRowIndex"></param>
+            <param name="cellStyleFunc">T1:current workbook T2:row index T3:col index</param>
             <returns></returns>
         </member>
         <member name="M:H.Npoi.ExcelHelper.NExcelHelper.ExportWorkbook``1(System.Collections.Generic.List{``0},System.String,System.Int32,System.Func{NPOI.SS.UserModel.IWorkbook,System.Int32,NPOI.SS.UserModel.ICellStyle})">
@@ -685,6 +707,7 @@
             获取NPOI的单元格的值
             </summary>
             <param name="cell"></param>
+            <param name="autoTransferDateValue"></param>
             <returns></returns>
         </member>
         <member name="M:H.Npoi.ExcelHelper.NExcelHelper.SetValue(NPOI.SS.UserModel.ICell,System.Object)">
