@@ -23,7 +23,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="NPOI" Version="2.7.0-rc1" />
+    <PackageReference Include="NPOI" Version="2.7.0" />
   </ItemGroup>
 
   <ItemGroup>

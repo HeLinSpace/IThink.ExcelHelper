@@ -106,6 +106,52 @@ namespace H.Npoi.ExcelHelper
         /// <param name="dataList"></param>
         /// <param name="dataRowIndex">数据行</param>
         /// <param name="templateFullPath">模板全路径</param>
+        /// <param name="cellStyleFunc">T1:current workbook  T2:row index T3:col index</param>
+        /// <returns></returns>
+        public static byte[] Export<T>(this List<T> dataList, string templateFullPath, int dataRowIndex, Func<IWorkbook, int, int, ICellStyle> cellStyleFunc) where T : IExportModel
+        {
+            var exportData = dataList.GetExportData(dataRowIndex);
+
+            using (var templatefs = new FileStream(templateFullPath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
+            {
+                var xssfWorkbook = new XSSFWorkbook(templatefs);
+
+                var workSheet = xssfWorkbook.GetSheetAt(0);
+
+                foreach (var rowData in exportData)
+                {
+                    var row = workSheet.CreateRow(rowData.RowNo);
+                    var cols = rowData.Cols.OrderBy(s => s.ColNo);
+                    foreach (var colData in cols)
+                    {
+                        var cell = row.CreateCell(colData.ColNo);
+                        SetValue(cell, colData.Value);
+
+                        if (cellStyleFunc != null)
+                        {
+                            var cellstyle = cellStyleFunc(xssfWorkbook, rowData.RowNo, colData.ColNo);
+                            cell.CellStyle = cellstyle;
+                        }
+                    }
+                }
+
+                using (var memoryStream = new MemoryStream())
+                {
+                    xssfWorkbook.Write(memoryStream);
+                    xssfWorkbook.Close();
+
+                    return memoryStream.ToArray();
+                }
+            }
+        }
+
+        /// <summary>
+        /// 执行导出
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="dataList"></param>
+        /// <param name="dataRowIndex">数据行</param>
+        /// <param name="templateFullPath">模板全路径</param>
         /// <param name="cellStyleFunc">T1:current workbook  T2:col index</param>
         /// <returns></returns>
         public static byte[] Export<T>(this List<T> dataList, string templateFullPath, int dataRowIndex, Func<IWorkbook, int, ICellStyle> cellStyleFunc) where T : IExportModel
@@ -142,6 +188,46 @@ namespace H.Npoi.ExcelHelper
 
                     return memoryStream.ToArray();
                 }
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="dataList"></param>
+        /// <param name="templateFullPath"></param>
+        /// <param name="dataRowIndex"></param>
+        /// <param name="cellStyleFunc">T1:current workbook T2:row index T3:col index</param>
+        /// <returns></returns>
+        public static XSSFWorkbook ExportWorkbook<T>(this List<T> dataList, string templateFullPath, int dataRowIndex, Func<IWorkbook, int, int, ICellStyle> cellStyleFunc) where T : IExportModel
+        {
+            var exportData = dataList.GetExportData(dataRowIndex);
+
+            using (var templatefs = new FileStream(templateFullPath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
+            {
+                var xssfWorkbook = new XSSFWorkbook(templatefs);
+
+                var workSheet = xssfWorkbook.GetSheetAt(0);
+
+                foreach (var rowData in exportData)
+                {
+                    var row = workSheet.CreateRow(rowData.RowNo);
+                    var cols = rowData.Cols.OrderBy(s => s.ColNo);
+                    foreach (var colData in cols)
+                    {
+                        var cell = row.CreateCell(colData.ColNo);
+                        SetValue(cell, colData.Value);
+
+                        if (cellStyleFunc != null)
+                        {
+                            var cellstyle = cellStyleFunc(xssfWorkbook, rowData.RowNo, colData.ColNo);
+                            cell.CellStyle = cellstyle;
+                        }
+                    }
+                }
+
+                return xssfWorkbook;
             }
         }
 
@@ -376,6 +462,7 @@ namespace H.Npoi.ExcelHelper
         /// 获取NPOI的单元格的值
         /// </summary>
         /// <param name="cell"></param>
+        /// <param name="autoTransferDateValue"></param>
         /// <returns></returns>
         internal static SheetDataColumn GetCellValue(this ICell cell, bool autoTransferDateValue = false)
         {
